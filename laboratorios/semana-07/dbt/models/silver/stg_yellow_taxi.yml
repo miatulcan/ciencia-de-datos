@@ -1,0 +1,58 @@
+version: 2
+
+models:
+  - name: stg_yellow_taxi
+    description: >
+      Typed and quality-annotated Yellow Taxi trip records
+      transformed from the Bronze raw ingestion layer.
+
+    columns:
+      - name: vendor_id
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 6, 7]
+
+      - name: pickup_datetime
+        tests:
+          - not_null
+
+      - name: dropoff_datetime
+        tests:
+          - not_null
+
+      - name: pickup_location_id
+        tests:
+          - not_null
+
+      - name: dropoff_location_id
+        tests:
+          - not_null
+
+      - name: trip_distance
+        tests:
+          - not_null
+
+      - name: total_amount
+        tests:
+          - not_null
+
+      - name: source_file
+        tests:
+          - not_null
+
+      - name: source_year
+        tests:
+          - not_null
+
+      - name: source_month
+        tests:
+          - not_null
+
+      - name: trip_record_hash
+        description: >
+          Deterministic fingerprint used to identify and remove
+          duplicate trip records.
+        tests:
+          - not_null
+          - unique

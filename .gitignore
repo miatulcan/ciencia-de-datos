@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+
+secrets/
+*.p8
+*.pem
+
+*.parquet
+laboratorios/semana-07/data/
+
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+
+__pycache__/
+*.pyc

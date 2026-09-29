@@ -1,0 +1,9 @@
+.env
+.env.*
+!.env.example
+secrets/
+*.p8
+*.pem
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/dbt/.user.yml

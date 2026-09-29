@@ -1,0 +1,85 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: >
+      Date dimension used to analyze Yellow Taxi trips from
+      pickup and dropoff temporal perspectives.
+
+    columns:
+      - name: date_key
+        description: Primary key in YYYYMMDD format.
+        tests:
+          - not_null
+          - unique
+
+      - name: full_date
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_zone
+    description: >
+      NYC Taxi Zone dimension used for both pickup and
+      dropoff locations.
+
+    columns:
+      - name: location_id
+        description: Primary key corresponding to the TLC LocationID.
+        tests:
+          - not_null
+          - unique
+
+      - name: borough
+        tests:
+          - not_null
+
+      - name: zone
+        tests:
+          - not_null
+
+  - name: fct_trips
+    description: >
+      Yellow Taxi trip fact table. The grain is one row per
+      deduplicated trip record from the Silver layer.
+
+    columns:
+      - name: trip_id
+        description: >
+          Deterministic technical identifier generated from the
+          trip record. It is not an official TLC trip identifier.
+        tests:
+          - not_null
+          - unique
+
+      - name: pickup_date_key
+        description: Foreign key to dim_date for the pickup date.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+
+      - name: dropoff_date_key
+        description: Foreign key to dim_date for the dropoff date.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+
+      - name: pickup_location_id
+        description: Foreign key to dim_zone for the pickup zone.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_zone')
+              field: location_id
+
+      - name: dropoff_location_id
+        description: Foreign key to dim_zone for the dropoff zone.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_zone')
+              field: location_id

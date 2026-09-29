@@ -1,0 +1,31 @@
+version: 2
+
+sources:
+  - name: bronze
+    database: NYC_TAXI
+    schema: BRONZE
+
+    tables:
+      - name: yellow_taxi_trips_raw
+        identifier: YELLOW_TAXI_TRIPS_RAW
+
+        columns:
+          - name: RAW_RECORD
+            tests:
+              - not_null
+
+          - name: SOURCE_FILE
+            tests:
+              - not_null
+
+          - name: SOURCE_YEAR
+            tests:
+              - not_null
+
+          - name: SOURCE_MONTH
+            tests:
+              - not_null
+
+          - name: INGESTED_AT
+            tests:
+              - not_null
